@@ -19,9 +19,15 @@ import { UpdateTodoDto } from './dto/update-todo.dto';
 export class TodoController {
   constructor(private todoService: TodoService) {}
 
+//   @Get()
+//   async getAllTodo(@Query() filterDto: GetTodoFilterDto): Promise<Todo[]> {
+//     return await this.todoService.getAllTodo(filterDto);
+//   }
+
+
   @Get()
-  async getAllTodo(@Query() filterDto: GetTodoFilterDto): Promise<Todo[]> {
-    return await this.todoService.getAllTodo(filterDto);
+  async getAllTodo(@Query() filterDto: GetTodoFilterDto) : Promise<Todo[]>  {
+      return await this.todoService.getAllTodo(filterDto);
   }
 
   //     @Get()
@@ -34,10 +40,15 @@ export class TodoController {
   //     }
 
   @Get('/:id')
-  getExpenseById(@Param('id') id: number): Promise<Todo>{
+  getTodoById(@Param('id') id: number): Promise<Todo>{
       return this.todoService.getTodoById(id);
   }
-  // @Post()
+
+//   @Get('/:id')
+//   getExpenseById(@Param('id') id: number, @GetUser() user: User): Promise<Expense>{
+//       return this.expenseService.getExpenseById(id, user);
+//   }
+//   // @Post()
   // createTodo(@Body('title') title:string , @Body('description') description:string ):Todo{
   //      return this.todoService.createTodo(title , description)
   // }

@@ -27,14 +27,20 @@ export class TodoService {
         const {status, search} = filterDto;
         const query = this.todoRepository.createQueryBuilder('todo');
 
-        query.where({status});
+      
+          // query.where({status});
+          if (status) {
+            query.where('todo.status = :status', { status });
+          }
 
         if(search){
-            query.andWhere('(LOWER(expense.title) LIKE LOWER(:search) OR LOWER(expense.description) LIKE LOWER(:search))',
-              { search : `%${search}%`},
-            );
-        }
+          query.andWhere('(LOWER(todo.title) LIKE LOWER(:search) OR LOWER(todo.description) LIKE LOWER(:search))',
+            { search : `%${search}%`},
+          );
 
+      }
+
+      
         const todo =  await query.getMany();
         return todo;
 
@@ -112,7 +118,7 @@ export class TodoService {
     const result = await this.todoRepository.delete(id);
 
     if(result.affected === 0)
-        throw new NotFoundException(`Expense with Id "${id}" not found`)
+        throw new NotFoundException(`Todo with Id "${id}" not found`)
     }
 
     // updateTodoStatus(id:number , status: TodoStatus){
